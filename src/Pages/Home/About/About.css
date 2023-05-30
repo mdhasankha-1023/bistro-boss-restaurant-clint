@@ -1,0 +1,7 @@
+.about{
+    background-image: url(../../../assets/home/chef-service.jpg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 480px;
+}

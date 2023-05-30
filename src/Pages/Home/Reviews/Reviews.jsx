@@ -18,7 +18,7 @@ const Reviews = () => {
             .then(data => setReviews(data))
     }, [])
 
-    console.log(reviews)
+    
     return (
         <div className="mb-32">
             <SectionTitle
@@ -40,7 +40,7 @@ const Reviews = () => {
                                         readOnly
                                         className="mb-11"
                                     />
-                                    <FaQuoteLeft size='4em' className="mb-10"></FaQuoteLeft>
+                                    <FaQuoteLeft size='4em' className="mb-7"></FaQuoteLeft>
                                     <p className="text-xl text-[#444444]">{review.details}</p>
                                     <h3 className="text-3xl text-[#CD9003] mt-2">{review.name}</h3>
                                 </div>
