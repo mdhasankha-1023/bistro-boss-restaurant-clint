@@ -10,12 +10,14 @@ import slider5 from '../../../assets/home/slide5.jpg'
 import SectionTitle from "../SectionTitle/SectionTitle";
 
 
+
 const Category = () => {
+
     return (
         <section className="my-24 max-w-screen-lg mx-auto">
             <SectionTitle
-            subHeading={'From 11.00am to 11.00pm'}
-            heading={'order online'}
+                subHeading={'From 11.00am to 11.00pm'}
+                heading={'order online'}
             ></SectionTitle>
             <Swiper
                 slidesPerView={4}

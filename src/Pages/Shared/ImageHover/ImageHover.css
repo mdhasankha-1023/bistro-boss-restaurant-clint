@@ -1,0 +1,12 @@
+.hover-zoom:hover {
+    background-color: black;
+  }
+/*   
+  .hover-zoom img {
+    transition: all 0.3s ease 0s;
+    width: 100%;
+  }
+  
+  .hover-zoom img:hover {
+    transform: scale(1.25);
+  } */
