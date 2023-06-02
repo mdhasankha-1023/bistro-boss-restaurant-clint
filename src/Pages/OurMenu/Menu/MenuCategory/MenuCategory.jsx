@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Cover from "../../../../Component/Cover/Cover";
 import MenuItem from "../../../Home/MenuItem/MenuItem";
 import SectionTitle from "../../../Home/SectionTitle/SectionTitle";
@@ -24,7 +25,9 @@ const MenuCategory = ({ items, img, title, subHeading, heading }) => {
                     }
                 </div>
                 <div className="text-center">
-                    <button className="border-b-4 py-3 px-5 mt-5 rounded-lg text-xl hover:text-[#D98641] border-[#1F2937] hover:border-[#D98641] upercase">Order Your Favourite Food</button>
+                    <Link to={`/order/${title}`}>
+                        <button className="border-b-4 py-3 px-5 mt-5 rounded-lg text-xl hover:text-[#D98641] border-[#1F2937] hover:border-[#D98641] uppercase">Order Your Favorite Food</button>
+                    </Link>
                 </div>
             </div>
 
