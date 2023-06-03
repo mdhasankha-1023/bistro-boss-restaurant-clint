@@ -19,7 +19,7 @@ const Order = () => {
     const salad = menu.filter(item => item.category === 'salad')
     const soup = menu.filter(item => item.category === 'soup')
     const drinks = menu.filter(item => item.category === 'drinks')
-console.log(index)
+
     
     return (
         <div>
@@ -28,12 +28,16 @@ console.log(index)
             </div>
             <div className="my-24 max-w-screen-lg mx-auto">
                 <Tabs defaultIndex={index} onSelect={(index) => setIndex(index)}>
-                    <TabList className={'border-0 flex gap-5 mx-auto mb-12'}>
-                        <Tab>Salad</Tab>
-                        <Tab>Pizza</Tab>
-                        <Tab>Soups</Tab>
-                        <Tab>Desserts</Tab>
-                        <Tab>Drinks</Tab>
+                    <TabList className={'border-0 flex gap-5 mx-auto mb-12 justify-center'}>
+                        <Tab className={'text-2xl cursor-pointer font-medium'} selectedClassName="text-[#BB8506] border-b-4 border-b-[#BB8506] pb-2">Salad</Tab>
+
+                        <Tab className={'text-2xl cursor-pointer font-medium'} selectedClassName="text-[#BB8506] border-b-4 border-b-[#BB8506] pb-2">Pizza</Tab>
+
+                        <Tab className={'text-2xl cursor-pointer font-medium'} selectedClassName="text-[#BB8506] border-b-4 border-b-[#BB8506] pb-2">Soups</Tab>
+
+                        <Tab className={'text-2xl cursor-pointer font-medium'} selectedClassName="text-[#BB8506] border-b-4 border-b-[#BB8506] pb-2">Desserts</Tab>
+
+                        <Tab  className={'text-2xl cursor-pointer font-medium'}selectedClassName="text-[#BB8506] border-b-4 border-b-[#BB8506] pb-2">Drinks</Tab>
                     </TabList>
                     <TabPanel>
                         <div className="grid grid-cols-3 gap-5">
