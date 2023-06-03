@@ -8,6 +8,7 @@ import Order from "../Pages/Order/Order/Order";
 import Others from "../Layout/Others";
 import Login from "../Pages/Login/Login";
 import Registration from "../Pages/Registration/Registration";
+import PrivetRoute from "./PrivetRoute/PrivetRoute";
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/order/:category',
-                element: <Order></Order>
+                element: <PrivetRoute><Order></Order></PrivetRoute>
             }
         ]
     },

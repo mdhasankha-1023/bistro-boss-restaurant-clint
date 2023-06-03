@@ -1,22 +1,26 @@
 import './login.css'
 import loginImg from '../../assets/others/authentication1.png'
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../Providers/AuthProviders';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
+    const { login } = useContext(AuthContext)
     const [disabled, setDisabled] = useState(true)
-    const captchaRef = useRef(null);
-    
-    
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+    const navigate = useNavigate();
+
     useEffect(() => {
         loadCaptchaEnginge(4);
-        
     }, [])
 
     // handleValidateText
-    const handleValidateCaptcha = () => {
-        const value = captchaRef.current.value;
-        if(validateCaptcha(value)===true){
+    const handleValidateCaptcha = (event) => {
+        const value = event.target.value;
+        if (validateCaptcha(value) === true) {
             setDisabled(false)
         }
     }
@@ -26,9 +30,15 @@ const Login = () => {
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        const captchaText = form.captchaText.value;
-        const loginInfo = { email, password, captchaText }
 
+        login(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                form.reset();
+                navigate(from)
+            })
+            .catch(error => console.log(error))
 
     }
 
@@ -39,9 +49,10 @@ const Login = () => {
                 <div className="text-center lg:text-left">
                     <img src={loginImg} alt="" />
                 </div>
-                <div className="card  w-full max-w-sm">
+                <div className="card  w-full max-w-lg py-8 px-8">
+                    <h2 className='text-center text-4xl font-bold'>Login!!</h2>
                     <form onSubmit={handleLoginForm}>
-                        <div className="card-body">
+                        <div className="card-body pt-4">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
@@ -58,8 +69,7 @@ const Login = () => {
                                 <label className="label mb-3">
                                     <LoadCanvasTemplate />
                                 </label>
-                                <input type="text" name='captchaText' placeholder="type showing text above" className="input input-bordered" ref={captchaRef} />
-                                <input onClick={handleValidateCaptcha} type="submit" className='btn btn-xs mt-2' value="validate" />
+                                <input onBlur={handleValidateCaptcha} type="text" placeholder="type showing text above" className="input input-bordered" />
                             </div>
 
                             <div className="form-control mt-6">
@@ -67,7 +77,13 @@ const Login = () => {
                             </div>
                         </div>
                     </form>
-
+                    <p className='text-xl text-[#bd8e49] text-center'>New here? <Link to='/registration' className='font-bold'>Create a New Account</Link> </p>
+                    <p className='text-center my-5 text-xm font-medium'>Or Login with</p>
+                    <div className='flex text-4xl justify-between w-3/6 mx-auto'>
+                        <FaFacebook className='me-3'></FaFacebook>
+                        <FaGoogle className='me-3'></FaGoogle>
+                        <FaGithub className='me-3'></FaGithub>
+                    </div>
                 </div>
             </div>
         </div>

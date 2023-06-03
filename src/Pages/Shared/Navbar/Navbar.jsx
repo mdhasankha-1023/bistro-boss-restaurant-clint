@@ -1,14 +1,29 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Providers/AuthProviders";
+import { FaUserAlt } from "react-icons/fa";
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext)
     const NavOptions = <>
         <li><Link to='/'>Home</Link></li>
         <li tabIndex={0}><Link to='/our-menu'>Our Menu</Link></li>
         <li><Link to='/order/Salad'>Order</Link></li>
+        {!user && <>
+            <li><Link to='/login'>Login</Link></li>
+            <li><Link to='/registration'>Registration</Link></li>
+        </>}
     </>
 
+    // handleSignOutBtn
+    const handleSignOutBtn = () => {
+        logOut()
+        .then(() => {})
+        .catch(error => console.log(error))
+    }
+
     return (
-        <div className="navbar fixed z-10 max-w-screen-xl mx-auto bg-black bg-opacity-40 text-white">
+        <div className="navbar fixed z-10 max-w-screen-xl mx-auto bg-black bg-opacity-40 text-white py-5 px-8">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -28,7 +43,12 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Get started</a>
+                {user && <>
+                    <p onClick={handleSignOutBtn} className="me-4 cursor-pointer text-lg">Sign-out</p>
+                    <div className="border p-2 rounded-full text-2xl cursor-pointer">
+                    <FaUserAlt></FaUserAlt>
+                    </div>
+                </>}
             </div>
         </div>
     );
