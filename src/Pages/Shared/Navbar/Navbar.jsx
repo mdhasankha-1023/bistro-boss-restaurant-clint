@@ -1,14 +1,23 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProviders";
-import { FaUserAlt } from "react-icons/fa";
+import { FaShoppingCart, FaUserAlt } from "react-icons/fa";
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const [cart] = useCart();
+
     const NavOptions = <>
         <li><Link to='/'>Home</Link></li>
         <li tabIndex={0}><Link to='/our-menu'>Our Menu</Link></li>
         <li><Link to='/order/Salad'>Order</Link></li>
+        <li><Link to='/order/Salad'>
+            <button className="btn btn-xs bg-black bg-opacity-50">
+                <FaShoppingCart size='2em'></FaShoppingCart>
+                <div className="badge badge-secondary">+{cart.length}</div>
+            </button>
+        </Link></li>
         {!user && <>
             <li><Link to='/login'>Login</Link></li>
             <li><Link to='/registration'>Registration</Link></li>
@@ -18,8 +27,8 @@ const Navbar = () => {
     // handleSignOutBtn
     const handleSignOutBtn = () => {
         logOut()
-        .then(() => {})
-        .catch(error => console.log(error))
+            .then(() => { })
+            .catch(error => console.log(error))
     }
 
     return (
@@ -44,9 +53,9 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
                 {user && <>
-                    <p onClick={handleSignOutBtn} className="me-4 cursor-pointer text-lg">Sign-out</p>
+                    <p onClick={handleSignOutBtn} className="me-4 cursor-pointer text-lg hover:text-[#EEFF25]">Sign-out</p>
                     <div className="border p-2 rounded-full text-2xl cursor-pointer">
-                    <FaUserAlt></FaUserAlt>
+                        <FaUserAlt></FaUserAlt>
                     </div>
                 </>}
             </div>

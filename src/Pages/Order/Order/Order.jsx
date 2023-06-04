@@ -6,6 +6,8 @@ import useMenu from "../../../Hooks/useMenu";
 import OrderCard from "../../../Component/OrderCard/OrderCard";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+// import Pagination from "../../../Component/Pagination/Pagination";
+
 
 
 const Order = () => {
@@ -45,6 +47,9 @@ const Order = () => {
                                 salad.map(orderInfo => <OrderCard key={orderInfo._id} orderInfo={orderInfo}></OrderCard>)
                             }
                         </div>
+                        {/* <div>
+                            <Pagination setProducts={setProducts} totalProducts={salad.length}></Pagination>
+                        </div> */}
                     </TabPanel>
                     <TabPanel>
                         <div className="grid grid-cols-3 gap-5">

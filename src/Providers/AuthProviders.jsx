@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import app from "../Firebase/Firebase.config";
+import Swal from "sweetalert2";
 export const AuthContext = createContext()
 
 const auth = getAuth(app)
@@ -8,7 +9,18 @@ const auth = getAuth(app)
 const AuthProviders = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-    
+
+    // success alert
+    const successAlert = (text) => {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: `${text}`,
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
 
     // onAuthStateChange
     useEffect(() => {
@@ -44,7 +56,8 @@ const AuthProviders = ({ children }) => {
         loading,
         login,
         signUp,
-        logOut
+        logOut,
+        successAlert
     }
 
     return (
