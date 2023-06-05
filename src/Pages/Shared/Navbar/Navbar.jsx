@@ -11,6 +11,7 @@ const Navbar = () => {
     const NavOptions = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/contact-us'>Contact Us</Link></li>
+        <li><Link to='/dashBoard'>DashBoard</Link></li>
         <li tabIndex={0}><Link to='/our-menu'>Our Menu</Link></li>
         <li><Link to='/order/Salad'>Order</Link></li>
         <li><Link to='/order/Salad'>
@@ -19,10 +20,7 @@ const Navbar = () => {
                 <div className="badge badge-secondary">+{cart.length}</div>
             </button>
         </Link></li>
-        {!user && <>
-            <li><Link to='/login'>Login</Link></li>
-            <li><Link to='/registration'>Registration</Link></li>
-        </>}
+        
     </>
 
     // handleSignOutBtn
@@ -53,12 +51,19 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                {user && <>
-                    <p onClick={handleSignOutBtn} className="me-4 cursor-pointer text-lg hover:text-[#EEFF25]">Sign-out</p>
-                    <div className="border p-2 rounded-full text-2xl cursor-pointer">
-                        <FaUserAlt></FaUserAlt>
-                    </div>
-                </>}
+                {
+                    user ? <>
+                        <p onClick={handleSignOutBtn} className="me-4 cursor-pointer text-lg hover:text-[#EEFF25]">Sign-out</p>
+                        <div className="border p-2 rounded-full text-2xl cursor-pointer">
+                            <FaUserAlt></FaUserAlt>
+                        </div>
+                    </>
+                        :
+                        <>
+                            <Link className="text-xl me-5" to='/login'>Login</Link>
+                            <Link  className="text-xl me-5" to='/registration'>Registration</Link>
+                        </>
+                }
             </div>
         </div>
     );

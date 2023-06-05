@@ -10,6 +10,9 @@ import Login from "../Pages/Login/Login";
 import Registration from "../Pages/Registration/Registration";
 import PrivetRoute from "./PrivetRoute/PrivetRoute";
 import ContactUs from "../Pages/ContactUsPage/ContactUs/ContactUs";
+import DashBoard from "../Layout/DashBoard";
+import MyCart from "../Pages/DashBoard/MyCart/MyCart";
+
 
 
 
@@ -47,6 +50,16 @@ const router = createBrowserRouter([
             {
                 path: '/registration',
                 element: <Registration></Registration>
+            }
+        ]
+    },
+    {
+        path: '/dashBoard',
+        element: <DashBoard></DashBoard>,
+        children: [
+            {
+                path:'/dashBoard/my-cart',
+                element: <MyCart></MyCart>
             }
         ]
     }
