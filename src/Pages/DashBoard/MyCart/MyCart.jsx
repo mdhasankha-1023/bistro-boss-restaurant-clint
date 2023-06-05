@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const MyCart = () => {
     const [cart, refetch] = useCart();
     const totalPrice = cart.reduce((sum, item) => item.price + sum, 0)
-
+    console.log(cart.length)
     // handleDeleteBtn
     const handleDeleteBtn = (id) => {
         Swal.fire({
@@ -17,30 +17,29 @@ const MyCart = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              fetch(`http://localhost:5000/carts/${id}`,{
-                method: 'DELETE',
-              })
-              .then(res => res.json())
-              .then(data => {
-                console.log(data);
-                if(data.deletedCount > 0){
-                    refetch()
-                    Swal.fire(
-                        'Deleted!',
-                        'Successfully deleted.',
-                        'success'
-                      )
-                }
-              })
+                fetch(`http://localhost:5000/carts/${id}`, {
+                    method: 'DELETE',
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            refetch()
+                            Swal.fire(
+                                'Deleted!',
+                                'Successfully deleted.',
+                                'success'
+                            )
+                        }
+                    })
             }
-          })
+        })
     }
 
 
     return (
-        <div className="w-full">
+        <div className="w-full relative">
             <SectionTitle heading={'Wanna Add More'} subHeading={'My Cart'}></SectionTitle>
             <div className="overflow-x-auto">
                 <div className="flex justify-between w-4/5 mx-auto my-4 text-2xl font-bold items-center">
@@ -59,7 +58,7 @@ const MyCart = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                         {
                             cart.map(row => <tr
                                 key={row._id}
@@ -78,7 +77,7 @@ const MyCart = () => {
                                 <td>${row.price}</td>
                                 <th >
                                     <div onClick={() => handleDeleteBtn(row._id)} className="bg-red-600 rounded-lg cursor-pointer text-white inline-block p-3">
-                                    <FaTrashAlt></FaTrashAlt>
+                                        <FaTrashAlt></FaTrashAlt>
                                     </div>
                                 </th>
                             </tr>)
@@ -86,6 +85,9 @@ const MyCart = () => {
                     </tbody>
                 </table>
             </div>
+            {
+                cart.length === 0 && <p className="text-2xl font-bold text-center absolute left-[40%] top-[60%] my-52 opacity-50">No Items Available...</p>
+            }
         </div>
     );
 };

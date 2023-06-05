@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import app from "../Firebase/Firebase.config";
 import Swal from "sweetalert2";
 export const AuthContext = createContext()
@@ -39,6 +39,14 @@ const AuthProviders = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
+    // update user's profile
+    const updateUsersProfile = (name, photoUrl) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photoUrl
+        })
+    }
+
     // login with email and password
     const login = (email, password) => {
         // setLoading(true)
@@ -57,7 +65,8 @@ const AuthProviders = ({ children }) => {
         login,
         signUp,
         logOut,
-        successAlert
+        successAlert,
+        updateUsersProfile
     }
 
     return (

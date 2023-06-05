@@ -10,10 +10,8 @@ const useCart = () => {
         queryFn:  async () => {
             const data = await fetch(`http://localhost:5000/carts?email=${user.email}`)
             return data.json()
-          } 
-        
+          }         
     })
-
     return [cart, refetch]
 }
 

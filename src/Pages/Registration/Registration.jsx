@@ -7,20 +7,43 @@ import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
 
 
 const Registration = () => {
-    const { signUp } = useContext(AuthContext)
+    const { signUp, updateUsersProfile, successAlert } = useContext(AuthContext)
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
 
     const onSubmit = (data) => {
-        const { email, password } = data;
+        const { email, password, name, photoUrl } = data;
 
         signUp(email, password)
             .then(result => {
                 const newUser = result.user;
                 console.log(newUser)
-                reset()
-                navigate('/login')
+
+                updateUsersProfile(name, photoUrl)
+                    .then(() => {
+                        const user = {name: name, email: email }
+                        fetch('http://localhost:5000/user',{
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(user)
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            if(data.insertedId){
+                                successAlert('Registration Successfully')
+                                navigate('/login')
+                                reset()
+                            }
+                        })
+                        .catch(error => console.log(error))
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
 
             })
             .catch(error => console.log(error))
@@ -54,7 +77,7 @@ const Registration = () => {
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password
-                                    <span className='text-red-700 text-xl'>*</span></span>
+                                        <span className='text-red-700 text-xl'>*</span></span>
                                 </label>
                                 <input type="password" {...register("password", { required: true })} placeholder="type your password" className="input input-bordered" />
                                 {errors.password && <span className='text-red-600'>Password is required</span>}

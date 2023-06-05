@@ -12,6 +12,7 @@ import PrivetRoute from "./PrivetRoute/PrivetRoute";
 import ContactUs from "../Pages/ContactUsPage/ContactUs/ContactUs";
 import DashBoard from "../Layout/DashBoard";
 import MyCart from "../Pages/DashBoard/MyCart/MyCart";
+import AllUsers from "../Pages/DashBoard/AllUsers/AllUsers";
 
 
 
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
             {
                 path:'/dashBoard/my-cart',
                 element: <MyCart></MyCart>
+            },
+            {
+                path: '/dashBoard/users',
+                element: <AllUsers></AllUsers>
             }
         ]
     }
