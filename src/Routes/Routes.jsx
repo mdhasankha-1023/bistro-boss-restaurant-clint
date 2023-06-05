@@ -9,6 +9,9 @@ import Others from "../Layout/Others";
 import Login from "../Pages/Login/Login";
 import Registration from "../Pages/Registration/Registration";
 import PrivetRoute from "./PrivetRoute/PrivetRoute";
+import ContactUs from "../Pages/ContactUsPage/ContactUs/ContactUs";
+
+
 
 const router = createBrowserRouter([
     {
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: '/order/:category',
                 element: <PrivetRoute><Order></Order></PrivetRoute>
+            },
+            {
+                path: '/contact-us',
+                element: <ContactUs></ContactUs>
             }
         ]
     },
