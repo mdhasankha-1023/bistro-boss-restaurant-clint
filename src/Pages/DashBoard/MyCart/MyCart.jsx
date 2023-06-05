@@ -1,11 +1,43 @@
 import { FaTrashAlt } from "react-icons/fa";
 import useCart from "../../../Hooks/useCart";
 import SectionTitle from "../../Home/SectionTitle/SectionTitle";
-
+import Swal from "sweetalert2";
 
 const MyCart = () => {
-    const [cart] = useCart();
+    const [cart, refetch] = useCart();
     const totalPrice = cart.reduce((sum, item) => item.price + sum, 0)
+
+    // handleDeleteBtn
+    const handleDeleteBtn = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              fetch(`http://localhost:5000/carts/${id}`,{
+                method: 'DELETE',
+              })
+              .then(res => res.json())
+              .then(data => {
+                console.log(data);
+                if(data.deletedCount > 0){
+                    refetch()
+                    Swal.fire(
+                        'Deleted!',
+                        'Successfully deleted.',
+                        'success'
+                      )
+                }
+              })
+            }
+          })
+    }
+
 
     return (
         <div className="w-full">
@@ -45,7 +77,7 @@ const MyCart = () => {
                                 <td>{row.name}</td>
                                 <td>${row.price}</td>
                                 <th >
-                                    <div className="bg-red-600 rounded-lg cursor-pointer text-white inline-block p-3">
+                                    <div onClick={() => handleDeleteBtn(row._id)} className="bg-red-600 rounded-lg cursor-pointer text-white inline-block p-3">
                                     <FaTrashAlt></FaTrashAlt>
                                     </div>
                                 </th>
