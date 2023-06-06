@@ -4,10 +4,10 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../Providers/AuthProviders';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
+import SocialLogin from '../../Component/SocialLogin/SocialLogin';
 
 const Login = () => {
-    const { login } = useContext(AuthContext)
+    const { login, successAlert, errorAlert } = useContext(AuthContext)
     const [disabled, setDisabled] = useState(true)
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
@@ -35,10 +35,11 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user)
+                successAlert('Login successfully')
                 form.reset();
                 navigate(from)
             })
-            .catch(error => console.log(error))
+            .catch(error => errorAlert(error.message))
 
     }
 
@@ -79,11 +80,7 @@ const Login = () => {
                     </form>
                     <p className='text-xl text-[#bd8e49] text-center'>New here? <Link to='/registration' className='font-bold'>Create a New Account</Link> </p>
                     <p className='text-center my-5 text-xm font-medium'>Or Login with</p>
-                    <div className='flex text-4xl justify-between w-3/6 mx-auto'>
-                        <FaFacebook className='me-3'></FaFacebook>
-                        <FaGoogle className='me-3'></FaGoogle>
-                        <FaGithub className='me-3'></FaGithub>
-                    </div>
+                    <SocialLogin></SocialLogin>
                 </div>
             </div>
         </div>

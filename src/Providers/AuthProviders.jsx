@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../Firebase/Firebase.config";
 import Swal from "sweetalert2";
 export const AuthContext = createContext()
@@ -9,6 +9,9 @@ const auth = getAuth(app)
 const AuthProviders = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    // provider
+    const googleProvider = new GoogleAuthProvider();
 
     // success alert
     const successAlert = (text) => {
@@ -21,12 +24,38 @@ const AuthProviders = ({ children }) => {
         })
     }
 
+    // error alert
+    const errorAlert = (text) => {
+        Swal.fire({
+            position: 'top-center',
+            icon: 'error',
+            title: `${text}`,
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
 
     // onAuthStateChange
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
             setLoading(false)
+            const user = { email: currentUser.email};
+            if(currentUser){
+                fetch('http://localhost:5000/jwt',{
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    localStorage.setItem('jwt_token', data.token)
+                })
+            }
+
             return () => {
                 unSubscribe();
             }
@@ -53,6 +82,16 @@ const AuthProviders = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
+    //-------------------------
+    //  social sign-in
+    // ------------------------
+
+    // google sign-in
+    const google = () => {
+        setLoading(true)
+        return signInWithPopup(auth, googleProvider)
+    }
+
     // log out
     const logOut = () => {
         setLoading(true)
@@ -66,6 +105,8 @@ const AuthProviders = ({ children }) => {
         signUp,
         logOut,
         successAlert,
+        errorAlert,
+        google,
         updateUsersProfile
     }
 

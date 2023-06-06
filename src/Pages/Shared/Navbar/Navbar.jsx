@@ -5,7 +5,7 @@ import { FaShoppingCart, FaUserAlt } from "react-icons/fa";
 import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext)
+    const { user, logOut, successAlert } = useContext(AuthContext)
     const [cart] = useCart();
 
     const NavOptions = <>
@@ -26,7 +26,10 @@ const Navbar = () => {
     // handleSignOutBtn
     const handleSignOutBtn = () => {
         logOut()
-            .then(() => { })
+            .then(() => { 
+                successAlert('Log-out Successfully')
+                localStorage.removeItem('jwt_token')
+            })
             .catch(error => console.log(error))
     }
 
