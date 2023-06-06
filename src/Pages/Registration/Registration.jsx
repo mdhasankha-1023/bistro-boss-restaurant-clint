@@ -3,11 +3,11 @@ import signUpImg from '../../assets/others/authentication2.png'
 import { AuthContext } from '../../Providers/AuthProviders';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
+import SocialLogin from '../../Component/SocialLogin/SocialLogin';
 
 
 const Registration = () => {
-    const { signUp, updateUsersProfile, successAlert } = useContext(AuthContext)
+    const { signUp, updateUsersProfile, successAlert, errorAlert } = useContext(AuthContext)
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
@@ -39,14 +39,14 @@ const Registration = () => {
                                 reset()
                             }
                         })
-                        .catch(error => console.log(error))
+                        .catch(error => errorAlert(error.message))
                     })
                     .catch(error => {
-                        console.log(error)
+                        errorAlert(error.message)
                     })
 
             })
-            .catch(error => console.log(error))
+            .catch(error => errorAlert(error.message))
 
     }
 
@@ -97,11 +97,7 @@ const Registration = () => {
                     </form>
                     <p className='text-xl text-[#bd8e49] text-center'>Already registered? <Link to='/login' className='font-bold'>Go to login</Link> </p>
                     <p className='text-center my-5 text-xm font-medium'>Or Registration with</p>
-                    <div className='flex text-4xl justify-between w-3/6 mx-auto'>
-                        <FaFacebook className='me-3'></FaFacebook>
-                        <FaGoogle className='me-3'></FaGoogle>
-                        <FaGithub className='me-3'></FaGithub>
-                    </div>
+                    <SocialLogin></SocialLogin>
                 </div>
             </div>
         </div>
